@@ -38,6 +38,8 @@ jobs:
 
       - name: Trigger Coolify Redeployment
         run: |
-          curl -X POST ${{ secrets.COOLIFY_WEBHOOK_URL }}
+          curl -X POST ${{ secrets.COOLIFY_WEBHOOK_URL }} \
+            -H "Authorization: Bearer ${{ secrets.COOLIFY_API_KEY }}"
         env:
           COOLIFY_WEBHOOK_URL: ${{ secrets.COOLIFY_WEBHOOK_URL }}
+          COOLIFY_API_KEY: ${{ secrets.COOLIFY_API_KEY }}
