@@ -17,6 +17,9 @@ import fyi.manpreet.portfolio.ui.apps.capturecomposable.CaptureComposable
 import fyi.manpreet.portfolio.ui.apps.starfield.StarField
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
+import portfolio.composeapp.generated.resources.Res
+import portfolio.composeapp.generated.resources.compose_multiplatform
+
 @Composable
 @Preview
 fun App(
