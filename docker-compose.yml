@@ -1,0 +1,8 @@
+services:
+  web:
+    build:
+      context: .
+      platforms:
+        - "${DOCKER_PLATFORM:-linux/amd64}" # Default to amd64, override for local dev
+    ports:
+      - "3003:80"
