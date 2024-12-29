@@ -67,6 +67,8 @@ kotlin {
 
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.serialization)
+
+            api(libs.compose.window.size)
         }
     }
 }
