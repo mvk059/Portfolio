@@ -35,12 +35,15 @@ fun App(
 
             composable<HomeDestination> {
                 HomeScreen(
-                    apps.value,
+                    apps = apps.value,
+                    snackbarHostState = viewModel.snackbarHostState,
                     onAppClick = { type ->
                         when (type) {
                             AppType.EMPTY -> {}
                             AppType.STARFIELD -> navController.navigate(StarFieldDestination)
                             AppType.CAPTURE_COMPOSABLE -> navController.navigate(CaptureComposableDestination)
+                            AppType.COMPOSABLE_MEME -> viewModel.showSnackBar(type)
+                            AppType.BRIGHT_START -> viewModel.showSnackBar(type)
                         }
                     },
                 )

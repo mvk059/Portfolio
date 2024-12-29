@@ -12,7 +12,9 @@ import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
+import androidx.compose.material.Scaffold
+import androidx.compose.material.SnackbarHost
+import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -27,47 +29,54 @@ import kotlin.random.Random.Default.nextInt
 @Composable
 fun HomeScreen(
     apps: List<Apps>,
+    snackbarHostState: SnackbarHostState,
     onAppClick: (AppType) -> Unit,
 ) {
 
-    LazyVerticalStaggeredGrid(
-        modifier = Modifier.padding(all = 8.dp),
-        columns = StaggeredGridCells.Fixed(2),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-        verticalItemSpacing = 8.dp
-    ) {
-        items(
-            items = apps,
-        ) { app ->
+    Scaffold(
+        snackbarHost = { SnackbarHost(snackbarHostState) },
+    ) { padding ->
 
-            Box(
-                modifier = Modifier
-                    .height(height = nextInt(from = 80, until = 200).dp)
-                    .clip(RoundedCornerShape(10.dp))
-                    .background(Color(nextInt()).copy(alpha = 0.5f))
-                    .clickable { onAppClick(app.type) },
-            ) {
+        LazyVerticalStaggeredGrid(
+            modifier = Modifier.padding(padding),
+            columns = StaggeredGridCells.Fixed(2),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalItemSpacing = 8.dp
+        ) {
+            items(
+                items = apps,
+            ) { app ->
 
-                Column(
-                    modifier = Modifier.fillMaxSize().padding(4.dp),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
+                Box(
+                    modifier = Modifier
+                        .height(height = nextInt(from = 80, until = 200).dp)
+                        .clip(RoundedCornerShape(10.dp))
+                        .background(Color(nextInt()).copy(alpha = 0.5f))
+                        .clickable { onAppClick(app.type) },
                 ) {
 
-                    Text(
-                        text = app.title,
-                        color = Color.White,
-                        fontSize = 20.sp,
-                        textAlign = TextAlign.Center,
-                    )
+                    Column(
+                        modifier = Modifier.fillMaxSize().padding(4.dp),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
 
-                    Text(
-                        text = app.subtitle,
-                        modifier = Modifier.padding(top = 4.dp),
-                        color = Color.White,
-                        fontSize = 12.sp,
-                        textAlign = TextAlign.Center,
-                    )
+                        Text(
+                            text = app.title,
+                            color = Color.White,
+                            fontSize = 20.sp,
+                            textAlign = TextAlign.Center,
+                        )
+
+                        Text(
+                            text = app.subtitle,
+                            modifier = Modifier.padding(top = 4.dp),
+                            color = Color.White,
+                            fontSize = 12.sp,
+                            textAlign = TextAlign.Center,
+                            letterSpacing = 0.15.sp,
+                        )
+                    }
                 }
             }
         }
