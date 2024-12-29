@@ -7,3 +7,6 @@ object HomeDestination
 
 @Serializable
 object StarFieldDestination
+
+@Serializable
+object CaptureComposableDestination

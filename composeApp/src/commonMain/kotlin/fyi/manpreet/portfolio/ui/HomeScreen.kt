@@ -12,6 +12,7 @@ import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -32,12 +33,11 @@ fun HomeScreen(
     LazyVerticalStaggeredGrid(
         modifier = Modifier.padding(all = 8.dp),
         columns = StaggeredGridCells.Fixed(2),
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
-        verticalItemSpacing = 16.dp
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalItemSpacing = 8.dp
     ) {
         items(
             items = apps,
-            key = { app -> app.type }
         ) { app ->
 
             Box(
@@ -45,7 +45,7 @@ fun HomeScreen(
                     .height(height = nextInt(from = 80, until = 200).dp)
                     .clip(RoundedCornerShape(10.dp))
                     .background(Color(nextInt()).copy(alpha = 0.5f))
-                    .clickable { onAppClick(app.type) }
+                    .clickable { onAppClick(app.type) },
             ) {
 
                 Column(
@@ -65,7 +65,7 @@ fun HomeScreen(
                         text = app.subtitle,
                         modifier = Modifier.padding(top = 4.dp),
                         color = Color.White,
-                        fontSize = 14.sp,
+                        fontSize = 12.sp,
                         textAlign = TextAlign.Center,
                     )
                 }
