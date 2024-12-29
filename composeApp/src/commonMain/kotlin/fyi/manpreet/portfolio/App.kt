@@ -1,6 +1,9 @@
 package fyi.manpreet.portfolio
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
@@ -17,18 +20,9 @@ import fyi.manpreet.portfolio.ui.apps.capturecomposable.CaptureComposable
 import fyi.manpreet.portfolio.ui.apps.starfield.StarField
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
-import portfolio.composeapp.generated.resources.Res
-import portfolio.composeapp.generated.resources.compose_multiplatform
-
 @Composable
 @Preview
-fun App(
-    navController: NavHostController = rememberNavController(),
-    viewModel: HomeViewModel = HomeViewModel(),
-) {
-
-    val apps = viewModel.apps.collectAsStateWithLifecycle()
-
+fun App() {
     MaterialTheme {
 
         NavHost(
