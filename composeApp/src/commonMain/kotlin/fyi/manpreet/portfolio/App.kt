@@ -1,9 +1,6 @@
 package fyi.manpreet.portfolio
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
@@ -22,7 +19,13 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 @Preview
-fun App() {
+fun App(
+    navController: NavHostController = rememberNavController(),
+    viewModel: HomeViewModel = HomeViewModel(),
+) {
+
+    val apps = viewModel.apps.collectAsStateWithLifecycle()
+
     MaterialTheme {
 
         NavHost(
