@@ -17,7 +17,8 @@ enum class AppType {
     STARFIELD,
     CAPTURE_COMPOSABLE,
     COMPOSABLE_MEME,
-    BRIGHT_START
+    BRIGHT_START,
+    EXPANDABLE_TEXT,
 }
 
 class HomeViewModel : ViewModel() {
@@ -60,7 +61,11 @@ class HomeViewModel : ViewModel() {
                     subtitle = "An Alarm app",
                     type = AppType.BRIGHT_START,
                 ),
-                Apps(title = "", subtitle = "", type = AppType.EMPTY),
+                Apps(
+                    title = "Expandable Text",
+                    subtitle = "Creating a Show More/Show Less text component",
+                    type = AppType.EXPANDABLE_TEXT
+                ),
                 Apps(title = "", subtitle = "", type = AppType.EMPTY),
                 Apps(title = "", subtitle = "", type = AppType.EMPTY),
                 Apps(title = "", subtitle = "", type = AppType.EMPTY),
