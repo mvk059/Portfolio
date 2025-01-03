@@ -10,3 +10,6 @@ object StarFieldDestination
 
 @Serializable
 object CaptureComposableDestination
+
+@Serializable
+object ExpandableTextDestination
