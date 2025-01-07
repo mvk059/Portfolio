@@ -1,6 +1,6 @@
 package fyi.manpreet.portfolio.ui
 
-import androidx.compose.material.SnackbarHostState
+import androidx.compose.material3.SnackbarHostState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,6 +19,7 @@ enum class AppType {
     COMPOSABLE_MEME,
     BRIGHT_START,
     EXPANDABLE_TEXT,
+    FILTER_CHIP_DROPDOWN,
 }
 
 class HomeViewModel : ViewModel() {
@@ -37,7 +38,6 @@ class HomeViewModel : ViewModel() {
     private fun initAppsList() {
         _apps.update {
             listOf(
-                Apps(title = "", subtitle = "", type = AppType.EMPTY),
                 Apps(title = "", subtitle = "", type = AppType.EMPTY),
                 Apps(title = "", subtitle = "", type = AppType.EMPTY),
                 Apps(title = "", subtitle = "", type = AppType.EMPTY),
@@ -65,6 +65,11 @@ class HomeViewModel : ViewModel() {
                     title = "Expandable Text",
                     subtitle = "Creating a Show More/Show Less text component",
                     type = AppType.EXPANDABLE_TEXT
+                ),
+                Apps(
+                    title = "Filter Chip Dropdown",
+                    subtitle = "Creating a FilterChip dropdown selector",
+                    type = AppType.FILTER_CHIP_DROPDOWN
                 ),
                 Apps(title = "", subtitle = "", type = AppType.EMPTY),
                 Apps(title = "", subtitle = "", type = AppType.EMPTY),

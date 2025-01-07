@@ -2,7 +2,7 @@ package fyi.manpreet.portfolio
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -13,6 +13,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import fyi.manpreet.portfolio.navigation.CaptureComposableDestination
 import fyi.manpreet.portfolio.navigation.ExpandableTextDestination
+import fyi.manpreet.portfolio.navigation.FilterChipDropdownDestination
 import fyi.manpreet.portfolio.navigation.HomeDestination
 import fyi.manpreet.portfolio.navigation.StarFieldDestination
 import fyi.manpreet.portfolio.ui.AppType
@@ -20,6 +21,7 @@ import fyi.manpreet.portfolio.ui.HomeScreen
 import fyi.manpreet.portfolio.ui.HomeViewModel
 import fyi.manpreet.portfolio.ui.apps.capturecomposable.CaptureComposable
 import fyi.manpreet.portfolio.ui.apps.expandable_text.ExpandableText
+import fyi.manpreet.portfolio.ui.apps.filterchip_dropdown.FilterChipDropdown
 import fyi.manpreet.portfolio.ui.apps.starfield.StarField
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -51,6 +53,7 @@ fun App(
                             AppType.COMPOSABLE_MEME -> viewModel.showSnackBar(type)
                             AppType.BRIGHT_START -> viewModel.showSnackBar(type)
                             AppType.EXPANDABLE_TEXT -> navController.navigate(ExpandableTextDestination)
+                            AppType.FILTER_CHIP_DROPDOWN -> navController.navigate(FilterChipDropdownDestination)
                         }
                     },
                 )
@@ -70,6 +73,10 @@ fun App(
                     text = sampleText,
                     modifier = Modifier.fillMaxWidth().padding(8.dp)
                 )
+            }
+
+            composable<FilterChipDropdownDestination> {
+                FilterChipDropdown()
             }
         }
     }

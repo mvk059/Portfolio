@@ -13,3 +13,6 @@ object CaptureComposableDestination
 
 @Serializable
 object ExpandableTextDestination
+
+@Serializable
+object FilterChipDropdownDestination

@@ -1,7 +1,7 @@
 package fyi.manpreet.portfolio.ui.apps.expandable_text
 
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,7 +24,7 @@ fun ExpandableText(
     collapsedMaxLine: Int = 3,
     showMoreText: String = " Show More",
     showLessText: String = " Show Less",
-    style: TextStyle = MaterialTheme.typography.body1,
+    style: TextStyle = MaterialTheme.typography.bodySmall,
     textColor: Color = Color.Black,
     showMoreStyle: SpanStyle = SpanStyle(color = Color.Blue, fontWeight = FontWeight.W500),
     showLessStyle: SpanStyle = SpanStyle(color = Color.Blue, fontWeight = FontWeight.W500),
