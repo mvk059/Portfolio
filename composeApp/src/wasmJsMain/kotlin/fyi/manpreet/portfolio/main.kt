@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.CanvasBasedWindow
 import fyi.manpreet.portfolio.ui.apps.capturecomposable.CaptureComposable
 import fyi.manpreet.portfolio.ui.apps.expandable_text.ExpandableText
+import fyi.manpreet.portfolio.ui.apps.filterchip_dropdown.FilterChipDropdown
 import fyi.manpreet.portfolio.ui.apps.starfield.StarField
 import kotlinx.browser.document
 import kotlinx.browser.window
@@ -64,7 +65,16 @@ fun composeApp() {
             projectUrl = "https://meme.manpreet.fyi"
         )
 
-        3 -> CaptureComposable()
+        3 -> {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Brush.verticalGradient(colors = listOf(Color(0xFF1a1a1a), Color(0xFF2a0a2a))))
+                    .padding(8.dp)
+            ) {
+                CaptureComposable(textColor = Color.White)
+            }
+        }
 
         4 -> {
             val sampleText =
@@ -85,7 +95,18 @@ fun composeApp() {
             }
         }
 
-        5 -> ProjectNavigationCard(
+        5 -> {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Brush.verticalGradient(colors = listOf(Color(0xFF1a1a1a), Color(0xFF2a0a2a))))
+                    .padding(8.dp)
+            ) {
+                FilterChipDropdown()
+            }
+        }
+
+        6 -> ProjectNavigationCard(
             projectTitle = "Bright Start",
             projectDescription = "An alarm with a cool custom time picker. Schedule your alarms for specific day and time.",
             projectUrl = "https://github.com/mvk059/BrightStart"
