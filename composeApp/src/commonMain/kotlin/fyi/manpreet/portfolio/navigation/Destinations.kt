@@ -16,3 +16,6 @@ object ExpandableTextDestination
 
 @Serializable
 object FilterChipDropdownDestination
+
+@Serializable
+object TranscribeAudioDestination

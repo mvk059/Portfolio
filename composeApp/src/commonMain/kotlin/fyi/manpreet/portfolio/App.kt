@@ -16,6 +16,7 @@ import fyi.manpreet.portfolio.navigation.ExpandableTextDestination
 import fyi.manpreet.portfolio.navigation.FilterChipDropdownDestination
 import fyi.manpreet.portfolio.navigation.HomeDestination
 import fyi.manpreet.portfolio.navigation.StarFieldDestination
+import fyi.manpreet.portfolio.navigation.TranscribeAudioDestination
 import fyi.manpreet.portfolio.ui.AppType
 import fyi.manpreet.portfolio.ui.HomeScreen
 import fyi.manpreet.portfolio.ui.HomeViewModel
@@ -23,6 +24,7 @@ import fyi.manpreet.portfolio.ui.apps.capturecomposable.CaptureComposable
 import fyi.manpreet.portfolio.ui.apps.expandable_text.ExpandableText
 import fyi.manpreet.portfolio.ui.apps.filterchip_dropdown.FilterChipDropdown
 import fyi.manpreet.portfolio.ui.apps.starfield.StarField
+import fyi.manpreet.portfolio.ui.apps.transcibe_audio.TranscribeAudio
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -54,6 +56,7 @@ fun App(
                             AppType.BRIGHT_START -> viewModel.showSnackBar(type)
                             AppType.EXPANDABLE_TEXT -> navController.navigate(ExpandableTextDestination)
                             AppType.FILTER_CHIP_DROPDOWN -> navController.navigate(FilterChipDropdownDestination)
+                            AppType.TRANSCRIBE_AUDIO -> navController.navigate(TranscribeAudioDestination)
                         }
                     },
                 )
@@ -77,6 +80,10 @@ fun App(
 
             composable<FilterChipDropdownDestination> {
                 FilterChipDropdown()
+            }
+
+            composable<TranscribeAudioDestination> {
+                TranscribeAudio()
             }
         }
     }
