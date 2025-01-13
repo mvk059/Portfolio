@@ -71,7 +71,7 @@ kotlin {
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.serialization)
 
-            implementation(libs.bundles.ktor.common)
+            implementation(libs.ktor.client.core)
             implementation(libs.groq)
 
             api(libs.compose.window.size)

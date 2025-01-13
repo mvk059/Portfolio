@@ -22,7 +22,7 @@ kotlinx-serialization = "1.7.3"
 
 composeWindowSize = "0.5.0"
 
-groq = "0.1.0"
+groq = "0.1.1"
 ktor = "3.0.2"
 
 [libraries]
@@ -47,15 +47,10 @@ kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-c
 compose-window-size = { module = "dev.chrisbanes.material3:material3-window-size-class-multiplatform", version.ref = "composeWindowSize" }
 
 ktor-client-core = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor" }
-ktor-client-json = { group = "io.ktor", name = "ktor-client-json", version.ref = "ktor" }
-ktor-client-serialization = { group = "io.ktor", name = "ktor-client-serialization", version.ref = "ktor" }
 ktor-client-android = { group = "io.ktor", name = "ktor-client-android", version.ref = "ktor" }
 ktor-client-darwin = { group = "io.ktor", name = "ktor-client-darwin", version.ref = "ktor" }
 
 groq = { module = "io.github.vyfor:groq-kt", version.ref = "groq"}
-
-[bundles]
-ktor-common = ["ktor-client-core", "ktor-client-json", "ktor-client-serialization"]
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
