@@ -20,7 +20,6 @@ enum class AppType {
     BRIGHT_START,
     EXPANDABLE_TEXT,
     FILTER_CHIP_DROPDOWN,
-    TRANSCRIBE_AUDIO,
 }
 
 class HomeViewModel : ViewModel() {
@@ -70,11 +69,6 @@ class HomeViewModel : ViewModel() {
                     title = "Filter Chip Dropdown",
                     subtitle = "Creating a FilterChip dropdown selector",
                     type = AppType.FILTER_CHIP_DROPDOWN
-                ),
-                Apps(
-                    title = "Transcribe Audio",
-                    subtitle = "Transcribe Audio using AI",
-                    type = AppType.TRANSCRIBE_AUDIO
                 ),
                 Apps(title = "", subtitle = "", type = AppType.EMPTY),
                 Apps(title = "", subtitle = "", type = AppType.EMPTY),
