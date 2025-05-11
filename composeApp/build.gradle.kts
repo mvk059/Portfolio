@@ -1,3 +1,5 @@
+import org.jetbrains.compose.reload.ComposeHotRun
+import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
@@ -10,6 +12,7 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.kotlinx.serialization)
+    alias(libs.plugins.compose.hotreload)
 }
 
 kotlin {
@@ -49,7 +52,13 @@ kotlin {
         }
         binaries.executable()
     }
-    
+
+    jvm("desktop") {
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_17)
+        }
+    }
+
     sourceSets {
         
         androidMain.dependencies {
@@ -67,18 +76,35 @@ kotlin {
             implementation(libs.compose.lifecycle.runtime)
             implementation(libs.compose.lifecycle.viewmodel)
             implementation(libs.compose.navigation)
+            implementation(libs.compose.material.icons)
 
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.serialization)
 
             implementation(libs.ktor.client.core)
             implementation(libs.groq)
+            implementation(libs.skiko)
+            implementation(libs.haze)
+            implementation(libs.haze.materials)
+            implementation(libs.coil)
+            implementation(libs.coil.network)
 
             api(libs.compose.window.size)
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
         }
+        val desktopMain by getting {
+            dependencies {
+                implementation(compose.desktop.currentOs)
+                implementation(libs.kotlinx.coroutines.swing)
+            }
+        }
+//        val desktopTest by getting {
+//            dependencies {
+//                implementation(libs.kotlinx.coroutines.test)
+//            }
+//        }
     }
 }
 
@@ -115,6 +141,22 @@ android {
     }
 }
 
+compose.desktop {
+    application {
+        mainClass = "MainKt"
+
+        nativeDistributions {
+            targetFormats(
+                org.jetbrains.compose.desktop.application.dsl.TargetFormat.Dmg,
+                org.jetbrains.compose.desktop.application.dsl.TargetFormat.Msi,
+                org.jetbrains.compose.desktop.application.dsl.TargetFormat.Deb
+            )
+            packageName = "fyi.manpreet.portfolio"
+            packageVersion = "1.0.0"
+        }
+    }
+}
+
 fun getLocalProperty(key: String): String {
     val localProperties = Properties().apply {
         val localPropertiesFile = rootProject.file("local.properties")
@@ -129,3 +171,10 @@ dependencies {
     debugImplementation(compose.uiTooling)
 }
 
+tasks.withType<ComposeHotRun>().configureEach {
+    mainClass.set("fyi.manpreet.portfolio.MainKt")
+}
+
+composeCompiler {
+    featureFlags.add(ComposeFeatureFlag.OptimizeNonSkippingGroups)
+}
