@@ -5,6 +5,7 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -17,10 +18,13 @@ import fyi.manpreet.portfolio.ui.apps.kenken.ui.KenKenScreen
 import fyi.manpreet.portfolio.ui.apps.kenken.viewmodel.KenKenViewModel
 import kotlin.math.abs
 
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 fun main() {
     singleWindowApplication {
+
         KenKenScreen(modifier = Modifier.fillMaxSize())
         return@singleWindowApplication
+        /*
 //        GridDemo()
 
         val viewModel: KenKenViewModel = remember { KenKenViewModel() }
@@ -49,9 +53,9 @@ fun main() {
                             state.horizontalLines.forEach { line ->
                                 val (startX, startY) = line.start
                                 val (endX, endY) = line.end
-                                val lineStartX = startX * state.cellSize
-                                val lineStartY = startY * state.cellSize
-                                val lineEndX = endX * state.cellSize
+                                val lineStartX = startX * state.cellWidthSize
+                                val lineStartY = startY * state.cellWidthSize
+                                val lineEndX = endX * state.cellWidthSize
 
                                 if (abs(clickY - lineStartY) < 20 && clickX in lineStartX..lineEndX) {
 //                                    viewModel.onLineClicked(line)
@@ -157,5 +161,7 @@ fun main() {
 //                )
 //            }
 //        }
+
+         */
     }
 }

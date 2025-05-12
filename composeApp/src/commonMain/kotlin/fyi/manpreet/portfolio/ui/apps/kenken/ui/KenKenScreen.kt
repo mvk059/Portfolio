@@ -1,29 +1,37 @@
 package fyi.manpreet.portfolio.ui.apps.kenken.ui
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import fyi.manpreet.portfolio.ui.apps.kenken.viewmodel.KenKenViewModel
+import fyi.manpreet.portfolio.window.calculateWindowWidthSize
 
 @Composable
 fun KenKenScreen(
     modifier: Modifier = Modifier,
     viewModel: KenKenViewModel = remember { KenKenViewModel() },
 ) {
-    val gridState by viewModel.gridState.collectAsState()
+    val gridState by viewModel.gridState.collectAsStateWithLifecycle()
+    val windowWidth = calculateWindowWidthSize()
+    val aspectRatio = when (windowWidth) {
+        WindowWidthSizeClass.Compact -> 0.8f
+        WindowWidthSizeClass.Medium  -> 0.8f
+        WindowWidthSizeClass.Expanded -> 0.6f
+        else -> 1f
+    }
 
     Column(
         modifier = modifier.fillMaxSize().padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+//        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
 
 //        // Grid size selector
@@ -61,12 +69,13 @@ fun KenKenScreen(
 //            onCellSizePixelsChange = viewModel::processIntent
 //        )
 
-        KenKenGrid1(
+        println("Update cell size 3: ${gridState.horizontalLines}")
+        KenKenGrid(
             modifier = Modifier.fillMaxSize(),
             gridSize = gridState.gridSize.value,
-            cellSize = gridState.cellSize,
             horizontalLines = gridState.horizontalLines,
             verticalLines = gridState.verticalLines,
+            selectedLineIds = gridState.selectedLineIds,
             onLineClick = viewModel::processIntent,
             onCellSizePixelsChange = viewModel::processIntent
         )
