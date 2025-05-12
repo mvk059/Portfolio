@@ -3,7 +3,6 @@ package fyi.manpreet.portfolio.ui.apps.kenken.model
 import androidx.compose.ui.geometry.Offset
 
 sealed interface KenKenGridIntent {
-    data class SetGridSize(val size: KenKenGridSize) : KenKenGridIntent
     data class ToggleLine(val selectedLine: KenKenGridLine) : KenKenGridIntent
     data object CreateNewShape : KenKenGridIntent
     data class SetShapeOperation(val operation: KenKenOperation) : KenKenGridIntent

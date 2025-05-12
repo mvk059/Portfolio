@@ -69,7 +69,6 @@ fun KenKenScreen(
 //            onCellSizePixelsChange = viewModel::processIntent
 //        )
 
-        println("Update cell size 3: ${gridState.horizontalLines}")
         KenKenGrid(
             modifier = Modifier.fillMaxSize(),
             gridSize = gridState.gridSize.value,

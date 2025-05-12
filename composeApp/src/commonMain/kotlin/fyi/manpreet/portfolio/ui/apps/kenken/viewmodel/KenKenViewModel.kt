@@ -74,24 +74,16 @@ class KenKenViewModel : ViewModel() {
                 verticalLines = verticalLines,
             )
         }
-        println("Update cell size 2: ${_gridState.value.horizontalLines}")
     }
 
     fun processIntent(intent: KenKenGridIntent) {
         when (intent) {
             KenKenGridIntent.CreateNewShape -> TODO()
             KenKenGridIntent.Reset -> TODO()
-            is KenKenGridIntent.SetGridSize -> {
-                initialiseGrid(intent.size.value, _gridState.value.cellSize)
-            }
-
             is KenKenGridIntent.SetShapeOperation -> TODO()
             is KenKenGridIntent.SetShapeValue -> TODO()
             is KenKenGridIntent.ToggleLine -> toggleLine(intent.selectedLine)
-            is KenKenGridIntent.UpdateCellSize -> {
-                println("Update cell size 1: ${intent.cellSize}")
-                initialiseGrid(_gridState.value.gridSize.value, intent.cellSize)
-            }
+            is KenKenGridIntent.UpdateCellSize -> updateCellSize(intent.cellSize)
         }
     }
 
@@ -104,5 +96,9 @@ class KenKenViewModel : ViewModel() {
         else selectedIds.add(targetLine.id)
 
         _gridState.update { it.copy(selectedLineIds = selectedIds) }
+    }
+
+    private fun updateCellSize(cellSize: Offset) {
+        initialiseGrid(gridSize = _gridState.value.gridSize.value, cellSize = cellSize)
     }
 } 

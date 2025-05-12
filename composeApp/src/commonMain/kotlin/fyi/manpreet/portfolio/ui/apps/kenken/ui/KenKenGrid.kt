@@ -40,7 +40,6 @@ fun KenKenGrid(
             .onSizeChanged {
                 val cellWidthSize = it.width / (gridSize - 1)
                 val cellHeightSize = it.height / (gridSize - 1)
-                println("onSizeChanged: $cellWidthSize / $cellHeightSize")
                 onCellSizePixelsChange(KenKenGridIntent.UpdateCellSize(Offset(cellWidthSize.toFloat(), cellHeightSize.toFloat())))
             }
             .pointerInput(horizontalLines, verticalLines) {
