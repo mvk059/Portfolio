@@ -70,7 +70,7 @@ fun KenKenScreen(
 //        )
 
         KenKenGrid(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxSize(aspectRatio),
             gridSize = gridState.gridSize.value,
             horizontalLines = gridState.horizontalLines,
             verticalLines = gridState.verticalLines,

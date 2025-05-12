@@ -11,7 +11,9 @@ data class KenKenGridState(
     val cells: List<List<KenKenGridItem>> = emptyList(),
     val horizontalLines: List<KenKenGridLine> = emptyList(),
     val verticalLines: List<KenKenGridLine> = emptyList(),
+    val boundaryLineIds: Set<String> = emptySet(),
     val selectedLineIds: Set<String> = emptySet(),
+    val shapes: List<KenKenShape> = emptyList()
 ) {
     companion object {
         val DEFAULT_GRID_SIZE = KenKenGridSize(4)
@@ -36,6 +38,14 @@ data class KenKenGridLine(
     val start: Offset = Offset.Unspecified,
     val end: Offset = Offset.Unspecified,
     val gridLineType: GridLineType,
+)
+
+@Immutable
+data class KenKenShape(
+    val id: String,
+    val cells: List<Pair<Int, Int>>,
+    val operation: KenKenOperation? = null,
+    val targetValue: Int? = null
 )
 
 @JvmInline
