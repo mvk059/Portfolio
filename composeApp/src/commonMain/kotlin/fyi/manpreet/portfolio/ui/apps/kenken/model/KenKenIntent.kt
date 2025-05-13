@@ -6,5 +6,7 @@ sealed interface KenKenGridIntent {
     data class ToggleLine(val selectedLine: KenKenGridLine) : KenKenGridIntent
     data class ToggleShapeOperator(val shape: KenKenShape) : KenKenGridIntent
     data class UpdateCellSize(val cellSize: Offset) : KenKenGridIntent
+    data class ShapeSelection(val shape: KenKenShape) : KenKenGridIntent
+    data class UpdateShape(val shape: KenKenShape, val operation: KenKenOperation, val targetValue: KenKenCellValue) : KenKenGridIntent
     data object Reset : KenKenGridIntent
 }

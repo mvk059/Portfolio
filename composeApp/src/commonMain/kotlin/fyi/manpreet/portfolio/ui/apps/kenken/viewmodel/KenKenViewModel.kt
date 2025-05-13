@@ -4,10 +4,12 @@ import androidx.compose.ui.geometry.Offset
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import fyi.manpreet.portfolio.ui.apps.kenken.model.GridLineType
+import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenCellValue
 import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenGridIntent
 import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenGridLine
 import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenGridSize
 import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenGridState
+import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenOperation
 import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenShape
 import fyi.manpreet.portfolio.ui.apps.kenken.usecase.KenKenShapeUseCase
 import fyi.manpreet.portfolio.ui.apps.kenken.util.getHorizontalId
@@ -33,6 +35,17 @@ class KenKenViewModel : ViewModel() {
         )
 
     private val shapeUseCase: KenKenShapeUseCase = KenKenShapeUseCase()
+
+    fun processIntent(intent: KenKenGridIntent) {
+        when (intent) {
+            is KenKenGridIntent.ToggleLine -> toggleLine(intent.selectedLine)
+            is KenKenGridIntent.ToggleShapeOperator -> toggleShapeOperator(intent.shape)
+            is KenKenGridIntent.UpdateCellSize -> updateCellSize(intent.cellSize)
+            is KenKenGridIntent.ShapeSelection -> updateShapeSelection(intent.shape)
+            is KenKenGridIntent.UpdateShape -> updateShape(intent.shape, intent.operation, intent.targetValue)
+            KenKenGridIntent.Reset -> TODO()
+        }
+    }
 
     private fun initialiseGrid(gridSize: Int?, cellSize: Offset?) {
         val gridSize = gridSize ?: _gridState.value.gridSize.value
@@ -90,15 +103,6 @@ class KenKenViewModel : ViewModel() {
         }
     }
 
-    fun processIntent(intent: KenKenGridIntent) {
-        when (intent) {
-            is KenKenGridIntent.ToggleLine -> toggleLine(intent.selectedLine)
-            is KenKenGridIntent.ToggleShapeOperator -> toggleShapeOperator(intent.shape)
-            is KenKenGridIntent.UpdateCellSize -> updateCellSize(intent.cellSize)
-            KenKenGridIntent.Reset -> TODO()
-        }
-    }
-
     private fun toggleLine(clickedLine: KenKenGridLine) {
         // Boundary line click
         if (clickedLine.id in _gridState.value.boundaryLineIds) return
@@ -132,6 +136,22 @@ class KenKenViewModel : ViewModel() {
 
     private fun updateCellSize(cellSize: Offset) {
         initialiseGrid(gridSize = _gridState.value.gridSize.value, cellSize = cellSize)
+    }
+
+    private fun updateShapeSelection(selectedShape: KenKenShape) {
+        val updatedShapes = _gridState.value.shapes.map { currentShape ->
+            if (selectedShape.id == currentShape.id) selectedShape.copy(isSelected = !selectedShape.isSelected)
+            else currentShape
+        }
+        _gridState.update { it.copy(shapes = updatedShapes) }
+    }
+
+    private fun updateShape(selectedShape: KenKenShape, operation: KenKenOperation, targetValue: KenKenCellValue) {
+        val updatedShapes = _gridState.value.shapes.map { currentShape ->
+            if (selectedShape.id == currentShape.id) selectedShape.copy(isSelected = false, operator = selectedShape.operator.copy(operation = operation, targetValue = targetValue))
+            else currentShape
+        }
+        _gridState.update { it.copy(shapes = updatedShapes) }
     }
 
     private fun getBoundaryIds(horizontalLines: MutableList<KenKenGridLine>, verticalLines: MutableList<KenKenGridLine>): Set<String> = buildSet {

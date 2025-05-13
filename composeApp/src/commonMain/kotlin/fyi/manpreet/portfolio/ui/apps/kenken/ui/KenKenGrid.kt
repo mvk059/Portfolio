@@ -9,6 +9,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onSizeChanged
@@ -32,7 +34,7 @@ fun KenKenGrid(
     shapes: List<KenKenShape>,
     onLineClick: (KenKenGridIntent.ToggleLine) -> Unit,
     onCellSizePixelsChange: (KenKenGridIntent.UpdateCellSize) -> Unit,
-    onShapeOperatorClick: (KenKenGridIntent.ToggleShapeOperator) -> Unit,
+    onShapeSelection: (KenKenGridIntent.ShapeSelection) -> Unit,
 ) {
 
     val textMeasurer = rememberTextMeasurer()
@@ -51,27 +53,33 @@ fun KenKenGrid(
                 detectTapGestures { offset ->
 
                     horizontalLines.forEach { line ->
-                        if (abs(offset.y - line.start.y) < 20 && offset.x in line.start.x..line.end.x) {
+                        if (abs(offset.y - line.start.y) < 10 && offset.x in line.start.x..line.end.x) {
                             onLineClick(KenKenGridIntent.ToggleLine(line))
                             return@detectTapGestures
                         }
                     }
 
                     verticalLines.forEach { line ->
-                        if (abs(offset.x - line.start.x) < 20 && offset.y in line.start.y..line.end.y) {
+                        if (abs(offset.x - line.start.x) < 10 && offset.y in line.start.y..line.end.y) {
                             onLineClick(KenKenGridIntent.ToggleLine(line))
                             return@detectTapGestures
                         }
                     }
 
                     shapes.forEach { shape ->
-                        if (abs(offset.x - shape.operator.topLeft.x) < 20 && abs(offset.y - shape.operator.topLeft.y) < 20) {
-                            onShapeOperatorClick(KenKenGridIntent.ToggleShapeOperator(shape))
+                        val textLayoutResult = textMeasurer.measure(
+                            text = "${shape.operator.operation.symbol} ${shape.operator.targetValue.value}"
+                        )
+                        val rect = Rect(
+                            offset = shape.operator.topLeft,
+                            size = Size(shape.operator.topLeft.x + textLayoutResult.size.width, shape.operator.topLeft.y + textLayoutResult.size.height)
+                        )
+                        if (rect.contains(offset)) {
+                            onShapeSelection(KenKenGridIntent.ShapeSelection(shape))
                         }
                     }
                 }
             }
-
     ) {
         canvasSize.value = size.width
 
@@ -98,11 +106,11 @@ fun KenKenGrid(
 
             drawText(
                 textMeasurer = textMeasurer,
-                text = shape.operator.operation.symbol,
+                text = "${shape.operator.operation.symbol}${shape.operator.targetValue.value}",
                 topLeft = shape.operator.topLeft,
                 style = TextStyle(
                     color = Color.Black,
-                    fontSize = 24.sp,
+                    fontSize = 16.sp,
                 )
             )
         }

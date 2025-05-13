@@ -16,7 +16,7 @@ data class KenKenGridState(
     val shapes: List<KenKenShape> = emptyList()
 ) {
     companion object {
-        val DEFAULT_GRID_SIZE = KenKenGridSize(4)
+        val DEFAULT_GRID_SIZE = KenKenGridSize(6)
         val minGridSize = KenKenGridSize(4)
         val maxGridSize = KenKenGridSize(8)
     }
@@ -45,13 +45,14 @@ data class KenKenShape(
     val id: String,
     val cells: List<Pair<Int, Int>>,
     val operator: KenKenOperator,
+    val isSelected: Boolean = false,
 ) {
 
     @Immutable
     data class KenKenOperator(
         val topLeft: Offset = Offset.Unspecified,
         val operation: KenKenOperation = KenKenOperation.ADD,
-        val targetValue: Int = 0
+        val targetValue: KenKenCellValue = KenKenCellValue(0)
     )
 }
 

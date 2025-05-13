@@ -37,10 +37,9 @@ class KenKenShapeUseCase {
                 )
                 val existingShape = shapes.firstOrNull { it.id == (row to col).getShapeID() }
                 if (existingShape != null)
-                    shape = shape.copy(operator = shape.operator.copy(operation = existingShape.operator.operation))
+                    shape = shape.copy(operator = shape.operator.copy(operation = existingShape.operator.operation, targetValue = existingShape.operator.targetValue))
                 add(shape)
             }
-
         }
     }
 
@@ -51,7 +50,7 @@ class KenKenShapeUseCase {
         horizontalLines.forEachIndexed { index, line ->
             if (shape == line.getStartCoordinatesFromId()) {
                 val boxWidth = line.end.x - line.start.x
-                val topLeft = Offset(line.start.x + boxWidth / 3, line.start.y + boxWidth / 8)
+                val topLeft = Offset(line.start.x + boxWidth / 10, line.start.y + boxWidth / 10)
                 return KenKenShape.KenKenOperator(topLeft = topLeft)
             }
         }

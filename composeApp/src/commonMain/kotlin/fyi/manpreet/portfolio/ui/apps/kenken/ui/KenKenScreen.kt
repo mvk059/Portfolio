@@ -20,6 +20,7 @@ fun KenKenScreen(
     viewModel: KenKenViewModel = remember { KenKenViewModel() },
 ) {
     val gridState by viewModel.gridState.collectAsStateWithLifecycle()
+    val selectedShape = gridState.shapes.firstOrNull { it.isSelected }
     val windowWidth = calculateWindowWidthSize()
     val aspectRatio = when (windowWidth) {
         WindowWidthSizeClass.Compact -> 0.8f
@@ -64,8 +65,15 @@ fun KenKenScreen(
             shapes = gridState.shapes,
             onLineClick = viewModel::processIntent,
             onCellSizePixelsChange = viewModel::processIntent,
-            onShapeOperatorClick = viewModel::processIntent,
+            onShapeSelection = viewModel::processIntent,
         )
+
+        if (selectedShape != null) {
+            KenKenInputDialog(
+                shape = selectedShape,
+                onShapeUpdate = viewModel::processIntent,
+            )
+        }
 //
 //        // Controls
 //        Row(
