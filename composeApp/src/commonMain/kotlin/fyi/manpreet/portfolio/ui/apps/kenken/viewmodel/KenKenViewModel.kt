@@ -10,7 +10,7 @@ import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenGridSize
 import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenGridState
 import fyi.manpreet.portfolio.ui.apps.kenken.usecase.KenKenShapeUseCase
 import fyi.manpreet.portfolio.ui.apps.kenken.util.getHorizontalId
-import fyi.manpreet.portfolio.ui.apps.kenken.util.getRowColumnFromId
+import fyi.manpreet.portfolio.ui.apps.kenken.util.getStartAndEndCoordinatesFromId
 import fyi.manpreet.portfolio.ui.apps.kenken.util.getVerticalId
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -83,6 +83,7 @@ class KenKenViewModel : ViewModel() {
                 verticalLines = verticalLines,
                 boundaryLineIds = boundaryLineIds,
                 selectedLineIds = selectedLineIds,
+                shapes = shapeUseCase.detectShapes(_gridState.value.gridSize, _gridState.value.selectedLineIds)
             )
         }
     }
@@ -127,12 +128,12 @@ class KenKenViewModel : ViewModel() {
         val gridSize = _gridState.value.gridSize.value
 
         horizontalLines.forEach { line ->
-            val (row, _) = line.getRowColumnFromId()
+            val (row, _) = line.getStartAndEndCoordinatesFromId()
             if (row == 0 || row == gridSize - 1) add(line.id)
         }
 
         verticalLines.forEach { line ->
-            val (_, col) = line.getRowColumnFromId()
+            val (_, col) = line.getStartAndEndCoordinatesFromId()
             if (col == 0 || col == gridSize - 1) add(line.id)
         }
     }

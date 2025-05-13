@@ -11,9 +11,13 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.rememberTextMeasurer
 import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenGridIntent
 import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenGridLine
+import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenShape
+import fyi.manpreet.portfolio.ui.apps.kenken.util.getStartCoordinatesFromId
 import kotlin.math.abs
 
 @Composable
@@ -23,6 +27,7 @@ fun KenKenGrid(
     horizontalLines: List<KenKenGridLine>,
     verticalLines: List<KenKenGridLine>,
     selectedLineIds: Set<String>,
+    shapes: List<KenKenShape>,
     onLineClick: (KenKenGridIntent.ToggleLine) -> Unit,
     onCellSizePixelsChange: (KenKenGridIntent.UpdateCellSize) -> Unit,
 ) {
@@ -69,6 +74,19 @@ fun KenKenGrid(
                 end = line.end,
                 strokeWidth = if (line.id in selectedLineIds) 4f else 2f
             )
+
+            shapes.forEach { shape ->
+                if (shape.cells.firstOrNull() == line.getStartCoordinatesFromId()) {
+                    drawText(
+                        textMeasurer = textMeasurer,
+                        text = "Operation",
+                        topLeft = line.start,
+                        style = TextStyle(
+                            color = Color.Black,
+                        )
+                    )
+                }
+            }
         }
 
         verticalLines.forEach { line ->

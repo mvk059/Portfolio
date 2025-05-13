@@ -54,27 +54,14 @@ fun KenKenScreen(
 //            )
 //        }
 //
-//        // Game grid
-//        KenKenGrid(
-//            modifier = Modifier.fillMaxWidth(0.8f),
-//            gridSize = state.gridSize,
-//            cellSize = 50f,
-//            horizontalLines = state.horizontalLines,
-//            verticalLines = state.verticalLines,
-//            selectedLines = state.selectedLines,
-//            shapes = state.shapes,
-//            onLineClick = { line ->
-//                viewModel.processIntent(KenKenIntent.ToggleLine(line))
-//            },
-//            onCellSizePixelsChange = viewModel::processIntent
-//        )
-
+        // Game grid
         KenKenGrid(
             modifier = Modifier.fillMaxSize(aspectRatio),
             gridSize = gridState.gridSize.value,
             horizontalLines = gridState.horizontalLines,
             verticalLines = gridState.verticalLines,
             selectedLineIds = gridState.selectedLineIds,
+            shapes = gridState.shapes,
             onLineClick = viewModel::processIntent,
             onCellSizePixelsChange = viewModel::processIntent
         )
