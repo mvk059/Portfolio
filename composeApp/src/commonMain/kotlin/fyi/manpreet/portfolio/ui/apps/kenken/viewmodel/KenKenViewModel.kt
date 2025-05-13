@@ -8,8 +8,10 @@ import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenGridIntent
 import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenGridLine
 import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenGridSize
 import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenGridState
-import fyi.manpreet.portfolio.ui.apps.kenken.util.getId
+import fyi.manpreet.portfolio.ui.apps.kenken.usecase.KenKenShapeUseCase
+import fyi.manpreet.portfolio.ui.apps.kenken.util.getHorizontalId
 import fyi.manpreet.portfolio.ui.apps.kenken.util.getRowColumnFromId
+import fyi.manpreet.portfolio.ui.apps.kenken.util.getVerticalId
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -28,6 +30,8 @@ class KenKenViewModel : ViewModel() {
             initialValue = KenKenGridState()
         )
 
+    private val shapeUseCase: KenKenShapeUseCase = KenKenShapeUseCase()
+
     private fun initialiseGrid(gridSize: Int?, cellSize: Offset?) {
         val gridSize = gridSize ?: _gridState.value.gridSize.value
         val cellSize = cellSize ?: _gridState.value.cellSize
@@ -40,7 +44,7 @@ class KenKenViewModel : ViewModel() {
 
             // Setup horizontal grid lines
             repeat(gridSize - 1) { col ->
-                val id = (row to col).getId(gridLineType = GridLineType.HORIZONTAL)
+                val id = (row to col).getHorizontalId()
                 horizontalLines.add(
                     KenKenGridLine(
                         id = id,
@@ -55,7 +59,7 @@ class KenKenViewModel : ViewModel() {
             if (row < gridSize - 1) {
                 // Draw vertical lines
                 repeat(gridSize) { col ->
-                    val id = (row to col).getId(gridLineType = GridLineType.VERTICAL)
+                    val id = (row to col).getVerticalId()
                     verticalLines.add(
                         KenKenGridLine(
                             id = id,
@@ -68,7 +72,7 @@ class KenKenViewModel : ViewModel() {
             }
         }
 
-        val boundaryLineIds = _gridState.value.boundaryLineIds.ifEmpty { getBoundaryIds() }
+        val boundaryLineIds = _gridState.value.boundaryLineIds.ifEmpty { getBoundaryIds(horizontalLines, verticalLines) }
         val selectedLineIds = _gridState.value.selectedLineIds.ifEmpty { boundaryLineIds }
 
         _gridState.update {
@@ -85,13 +89,18 @@ class KenKenViewModel : ViewModel() {
 
     fun processIntent(intent: KenKenGridIntent) {
         when (intent) {
-            KenKenGridIntent.CreateNewShape -> TODO()
-            KenKenGridIntent.Reset -> TODO()
+            KenKenGridIntent.CreateNewShape -> createNewShape()
             is KenKenGridIntent.SetShapeOperation -> TODO()
             is KenKenGridIntent.SetShapeValue -> TODO()
             is KenKenGridIntent.ToggleLine -> toggleLine(intent.selectedLine)
             is KenKenGridIntent.UpdateCellSize -> updateCellSize(intent.cellSize)
+            KenKenGridIntent.Reset -> TODO()
         }
+    }
+
+    private fun createNewShape() {
+        val shapes = shapeUseCase.detectShapes(_gridState.value.gridSize, _gridState.value.selectedLineIds)
+        _gridState.update { it.copy(shapes = shapes) }
     }
 
     private fun toggleLine(clickedLine: KenKenGridLine) {
@@ -107,16 +116,15 @@ class KenKenViewModel : ViewModel() {
         else selectedIds.add(targetLine.id)
 
         _gridState.update { it.copy(selectedLineIds = selectedIds) }
+        createNewShape()
     }
 
     private fun updateCellSize(cellSize: Offset) {
         initialiseGrid(gridSize = _gridState.value.gridSize.value, cellSize = cellSize)
     }
 
-    private fun getBoundaryIds(): Set<String> = buildSet {
+    private fun getBoundaryIds(horizontalLines: MutableList<KenKenGridLine>, verticalLines: MutableList<KenKenGridLine>): Set<String> = buildSet {
         val gridSize = _gridState.value.gridSize.value
-        val horizontalLines = _gridState.value.horizontalLines
-        val verticalLines = _gridState.value.verticalLines
 
         horizontalLines.forEach { line ->
             val (row, _) = line.getRowColumnFromId()
@@ -128,4 +136,4 @@ class KenKenViewModel : ViewModel() {
             if (col == 0 || col == gridSize - 1) add(line.id)
         }
     }
-} 
+}

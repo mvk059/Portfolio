@@ -1,0 +1,92 @@
+package fyi.manpreet.portfolio.ui.apps.kenken.usecase
+
+import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenGridSize
+import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenShape
+import fyi.manpreet.portfolio.ui.apps.kenken.util.getBottomID
+import fyi.manpreet.portfolio.ui.apps.kenken.util.getLeftID
+import fyi.manpreet.portfolio.ui.apps.kenken.util.getRightID
+import fyi.manpreet.portfolio.ui.apps.kenken.util.getTopID
+
+class KenKenShapeUseCase {
+
+    fun detectShapes(
+        gridSize: KenKenGridSize,
+        selectedLineIds: Set<String>,
+    ): List<KenKenShape> = buildList {
+        val gridSize = gridSize.value - 1
+        val visited = mutableSetOf<Pair<Int, Int>>()
+
+        // Examine each cell as a potential starting point
+        for (row in 0 until gridSize) {
+            for (col in 0 until gridSize) {
+                if (Pair(row, col) !in visited) {
+                    val shapeCells = floodFill(startRow = row, startCol = col, gridSize = gridSize, visited = visited, selectedLineIds = selectedLineIds)
+                    println("floodfill shape_${size+1} $shapeCells")
+                    add(KenKenShape(id = "shape_${size+1}", cells = shapeCells))
+                }
+            }
+        }
+    }
+
+    /**
+     * Identify all the grid boxes that form a shape using the flood fill algorithm
+     */
+    private fun floodFill(
+        startRow: Int,
+        startCol: Int,
+        gridSize: Int,
+        visited: MutableSet<Pair<Int, Int>>,
+        selectedLineIds: Set<String>,
+    ): List<Pair<Int, Int>> {
+        val shape = mutableListOf<Pair<Int, Int>>()
+        val queue = ArrayDeque<Pair<Int, Int>>()
+        queue.add(Pair(startRow, startCol))
+
+        while (queue.isNotEmpty()) {
+            val (row, col) = queue.removeFirst()
+
+            if (Pair(row, col) in visited) continue
+
+            visited.add(Pair(row, col))
+            shape.add(Pair(row, col))
+
+            // Check the top boundary
+            val top = (row to col).getTopID()
+            if (row - 1 in 0 until gridSize && col in 0 until gridSize &&
+                top !in selectedLineIds &&
+                Pair(row - 1, col) !in visited
+            ) {
+                queue.add(row - 1 to col)
+            }
+
+            // Check the right boundary
+            val right = (row to col).getRightID()
+            if (row in 0 until gridSize && col + 1 in 0 until gridSize &&
+                right !in selectedLineIds &&
+                Pair(row, col + 1) !in visited
+            ) {
+                queue.add(row to col + 1)
+            }
+
+            // Check the bottom boundary
+            val bottom = (row to col).getBottomID()
+            if (row + 1 in 0 until gridSize && col in 0 until gridSize &&
+                bottom !in selectedLineIds &&
+                Pair(row + 1, col) !in visited
+            ) {
+                queue.add(row + 1 to col)
+            }
+
+            // Check the left boundary
+            val left = (row to col).getLeftID()
+            if (row in 0 until gridSize && col - 1 in 0 until gridSize &&
+                left !in selectedLineIds &&
+                Pair(row, col - 1) !in visited
+            ) {
+                queue.add(row to col - 1)
+            }
+        }
+
+        return shape
+    }
+}

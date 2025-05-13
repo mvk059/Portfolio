@@ -11,10 +11,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onSizeChanged
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.rememberTextMeasurer
-import androidx.compose.ui.unit.sp
 import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenGridIntent
 import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenGridLine
 import kotlin.math.abs
@@ -67,28 +64,16 @@ fun KenKenGrid(
         // Draw grid lines
         horizontalLines.forEachIndexed { index, line ->
             drawLine(
-                color = if (line.id in selectedLineIds) Color.Blue else Color.Gray,
+                color = if (line.id in selectedLineIds) Color.Black else Color.LightGray,
                 start = line.start,
                 end = line.end,
                 strokeWidth = if (line.id in selectedLineIds) 4f else 2f
             )
-
-            if (index < horizontalLines.size - 3) { // - grid size - 1
-                drawText(
-                    textMeasurer = textMeasurer,
-                    text = "1",
-                    topLeft = line.start,
-                    style = TextStyle(
-                        color = Color.Black,
-                        fontSize = 16.sp,
-                    )
-                )
-            }
         }
 
         verticalLines.forEach { line ->
             drawLine(
-                color = if (line.id in selectedLineIds) Color.Blue else Color.Gray,
+                color = if (line.id in selectedLineIds) Color.Black else Color.LightGray,
                 start = line.start,
                 end = line.end,
                 strokeWidth = if (line.id in selectedLineIds) 4f else 2f
