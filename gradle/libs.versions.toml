@@ -31,6 +31,7 @@ skiko = "0.9.16"
 groq = "0.1.1"
 haze = "1.6.0-beta03"
 coil = "3.1.0"
+composables = "1.30.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -62,6 +63,7 @@ groq = { module = "io.github.vyfor:groq-kt", version.ref = "groq" }
 skiko = { module = "org.jetbrains.skiko:skiko", version.ref = "skiko" }
 haze = { module = "dev.chrisbanes.haze:haze", version.ref = "haze" }
 haze-materials = { module = "dev.chrisbanes.haze:haze-materials", version.ref = "haze" }
+composables = { module = "com.composables:core", version.ref = "composables" }
 
 coil = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
 coil-network = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil" }

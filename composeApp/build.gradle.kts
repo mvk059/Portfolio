@@ -86,8 +86,7 @@ kotlin {
             implementation(libs.skiko)
             implementation(libs.haze)
             implementation(libs.haze.materials)
-            implementation(libs.coil)
-            implementation(libs.coil.network)
+            implementation(libs.composables)
 
             api(libs.compose.window.size)
         }
@@ -100,11 +99,6 @@ kotlin {
                 implementation(libs.kotlinx.coroutines.swing)
             }
         }
-//        val desktopTest by getting {
-//            dependencies {
-//                implementation(libs.kotlinx.coroutines.test)
-//            }
-//        }
     }
 }
 
