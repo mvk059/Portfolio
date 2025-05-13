@@ -23,7 +23,7 @@ fun KenKenScreen(
     val windowWidth = calculateWindowWidthSize()
     val aspectRatio = when (windowWidth) {
         WindowWidthSizeClass.Compact -> 0.8f
-        WindowWidthSizeClass.Medium  -> 0.8f
+        WindowWidthSizeClass.Medium -> 0.8f
         WindowWidthSizeClass.Expanded -> 0.6f
         else -> 1f
     }
@@ -63,7 +63,8 @@ fun KenKenScreen(
             selectedLineIds = gridState.selectedLineIds,
             shapes = gridState.shapes,
             onLineClick = viewModel::processIntent,
-            onCellSizePixelsChange = viewModel::processIntent
+            onCellSizePixelsChange = viewModel::processIntent,
+            onShapeOperatorClick = viewModel::processIntent,
         )
 //
 //        // Controls

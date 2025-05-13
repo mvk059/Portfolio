@@ -1,10 +1,14 @@
 package fyi.manpreet.portfolio.ui.apps.kenken.usecase
 
+import androidx.compose.ui.geometry.Offset
+import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenGridLine
 import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenGridSize
 import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenShape
 import fyi.manpreet.portfolio.ui.apps.kenken.util.getBottomID
 import fyi.manpreet.portfolio.ui.apps.kenken.util.getLeftID
 import fyi.manpreet.portfolio.ui.apps.kenken.util.getRightID
+import fyi.manpreet.portfolio.ui.apps.kenken.util.getShapeID
+import fyi.manpreet.portfolio.ui.apps.kenken.util.getStartCoordinatesFromId
 import fyi.manpreet.portfolio.ui.apps.kenken.util.getTopID
 
 class KenKenShapeUseCase {
@@ -12,6 +16,8 @@ class KenKenShapeUseCase {
     fun detectShapes(
         gridSize: KenKenGridSize,
         selectedLineIds: Set<String>,
+        horizontalLines: List<KenKenGridLine>,
+        shapes: List<KenKenShape>,
     ): List<KenKenShape> = buildList {
         val gridSize = gridSize.value - 1
         val visited = mutableSetOf<Pair<Int, Int>>()
@@ -19,13 +25,37 @@ class KenKenShapeUseCase {
         // Examine each cell as a potential starting point
         for (row in 0 until gridSize) {
             for (col in 0 until gridSize) {
-                if (Pair(row, col) !in visited) {
-                    val shapeCells = floodFill(startRow = row, startCol = col, gridSize = gridSize, visited = visited, selectedLineIds = selectedLineIds)
-                    println("floodfill shape_${size+1} $shapeCells")
-                    add(KenKenShape(id = "shape_${size+1}", cells = shapeCells))
-                }
+                if ((row to col) in visited) continue
+
+                val shapeCells = floodFill(startRow = row, startCol = col, gridSize = gridSize, visited = visited, selectedLineIds = selectedLineIds)
+                if (shapeCells.isEmpty()) continue
+
+                var shape = KenKenShape(
+                    id = (row to col).getShapeID(),
+                    cells = shapeCells,
+                    operator = findShapePosition(shape = shapeCells.first(), horizontalLines = horizontalLines, shapes = shapes)
+                )
+                val existingShape = shapes.firstOrNull { it.id == (row to col).getShapeID() }
+                if (existingShape != null)
+                    shape = shape.copy(operator = shape.operator.copy(operation = existingShape.operator.operation))
+                add(shape)
+            }
+
+        }
+    }
+
+    /**
+     * Find the top left offset for the [shape]
+     */
+    private fun findShapePosition(shape: Pair<Int, Int>, horizontalLines: List<KenKenGridLine>, shapes: List<KenKenShape>): KenKenShape.KenKenOperator {
+        horizontalLines.forEachIndexed { index, line ->
+            if (shape == line.getStartCoordinatesFromId()) {
+                val boxWidth = line.end.x - line.start.x
+                val topLeft = Offset(line.start.x + boxWidth / 3, line.start.y + boxWidth / 8)
+                return KenKenShape.KenKenOperator(topLeft = topLeft)
             }
         }
+        throw IllegalArgumentException("Shape position is not valid. ")
     }
 
     /**

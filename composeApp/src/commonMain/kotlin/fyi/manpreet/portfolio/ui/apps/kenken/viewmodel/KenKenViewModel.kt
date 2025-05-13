@@ -8,10 +8,12 @@ import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenGridIntent
 import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenGridLine
 import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenGridSize
 import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenGridState
+import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenShape
 import fyi.manpreet.portfolio.ui.apps.kenken.usecase.KenKenShapeUseCase
 import fyi.manpreet.portfolio.ui.apps.kenken.util.getHorizontalId
 import fyi.manpreet.portfolio.ui.apps.kenken.util.getStartAndEndCoordinatesFromId
 import fyi.manpreet.portfolio.ui.apps.kenken.util.getVerticalId
+import fyi.manpreet.portfolio.ui.apps.kenken.util.next
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -83,25 +85,18 @@ class KenKenViewModel : ViewModel() {
                 verticalLines = verticalLines,
                 boundaryLineIds = boundaryLineIds,
                 selectedLineIds = selectedLineIds,
-                shapes = shapeUseCase.detectShapes(_gridState.value.gridSize, _gridState.value.selectedLineIds)
+                shapes = shapeUseCase.detectShapes(_gridState.value.gridSize, _gridState.value.selectedLineIds, horizontalLines, emptyList())
             )
         }
     }
 
     fun processIntent(intent: KenKenGridIntent) {
         when (intent) {
-            KenKenGridIntent.CreateNewShape -> createNewShape()
-            is KenKenGridIntent.SetShapeOperation -> TODO()
-            is KenKenGridIntent.SetShapeValue -> TODO()
             is KenKenGridIntent.ToggleLine -> toggleLine(intent.selectedLine)
+            is KenKenGridIntent.ToggleShapeOperator -> toggleShapeOperator(intent.shape)
             is KenKenGridIntent.UpdateCellSize -> updateCellSize(intent.cellSize)
             KenKenGridIntent.Reset -> TODO()
         }
-    }
-
-    private fun createNewShape() {
-        val shapes = shapeUseCase.detectShapes(_gridState.value.gridSize, _gridState.value.selectedLineIds)
-        _gridState.update { it.copy(shapes = shapes) }
     }
 
     private fun toggleLine(clickedLine: KenKenGridLine) {
@@ -116,8 +111,23 @@ class KenKenViewModel : ViewModel() {
         if (targetLine.id in selectedIds) selectedIds.remove(targetLine.id)
         else selectedIds.add(targetLine.id)
 
-        _gridState.update { it.copy(selectedLineIds = selectedIds) }
-        createNewShape()
+        val shapes = shapeUseCase.detectShapes(
+            gridSize = _gridState.value.gridSize,
+            selectedLineIds = selectedIds,
+            horizontalLines = _gridState.value.horizontalLines,
+            shapes = _gridState.value.shapes
+        )
+        _gridState.update { it.copy(selectedLineIds = selectedIds, shapes = shapes) }
+    }
+
+    private fun toggleShapeOperator(selectedShape: KenKenShape) {
+        val updatedShapes = _gridState.value.shapes.map { currentShape ->
+            if (selectedShape.id == currentShape.id) {
+                val operator = currentShape.operator.copy(operation = currentShape.operator.operation.next())
+                currentShape.copy(operator = operator)
+            } else currentShape
+        }
+        _gridState.update { it.copy(shapes = updatedShapes) }
     }
 
     private fun updateCellSize(cellSize: Offset) {

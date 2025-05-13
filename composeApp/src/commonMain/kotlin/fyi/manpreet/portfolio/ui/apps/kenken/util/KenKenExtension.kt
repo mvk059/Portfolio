@@ -1,6 +1,7 @@
 package fyi.manpreet.portfolio.ui.apps.kenken.util
 
 import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenGridLine
+import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenOperation
 
 fun Pair<Int, Int>.getHorizontalId(): String = buildString {
     val (row, col) = this@getHorizontalId
@@ -32,6 +33,11 @@ fun Pair<Int, Int>.getLeftID(): String = buildString {
     append("$row $col ${row + 1} $col")
 }
 
+fun Pair<Int, Int>.getShapeID(): String = buildString {
+    val (row, col) = this@getShapeID
+    append("shape $row $col")
+}
+
 fun KenKenGridLine.getStartAndEndCoordinatesFromId(): Pair<Int, Int> {
     val chunks = id.split(" ").map(String::toInt)
     require(chunks.size == 4) { "Invalid GridLine ID: $id" }
@@ -42,4 +48,13 @@ fun KenKenGridLine.getStartCoordinatesFromId(): Pair<Int, Int> {
     val chunks = id.split(" ").map(String::toInt)
     require(chunks.size == 4) { "Invalid GridLine ID: $id" }
     return chunks.first() to chunks[1]
+}
+
+/**
+ * Returns the next operation in sequence, cycling back to ADD after DIVIDE
+ */
+fun KenKenOperation.next(): KenKenOperation {
+    val values = KenKenOperation.entries.toTypedArray()
+    val nextOrdinal = (this.ordinal + 1) % values.size
+    return values[nextOrdinal]
 }

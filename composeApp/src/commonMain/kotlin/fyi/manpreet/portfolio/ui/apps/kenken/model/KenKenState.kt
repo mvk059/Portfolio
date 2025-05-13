@@ -44,9 +44,16 @@ data class KenKenGridLine(
 data class KenKenShape(
     val id: String,
     val cells: List<Pair<Int, Int>>,
-    val operation: KenKenOperation? = null,
-    val targetValue: Int? = null
-)
+    val operator: KenKenOperator,
+) {
+
+    @Immutable
+    data class KenKenOperator(
+        val topLeft: Offset = Offset.Unspecified,
+        val operation: KenKenOperation = KenKenOperation.ADD,
+        val targetValue: Int = 0
+    )
+}
 
 @JvmInline
 value class KenKenCellValue(val value: Int)
