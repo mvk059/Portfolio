@@ -8,6 +8,7 @@ import kotlin.jvm.JvmInline
 data class KenKenGridState(
     val gridSize: KenKenGridSize = DEFAULT_GRID_SIZE,
     val cellSize: Offset = Offset(50f, 50f),
+    val groupSize: KenKenGroupSize = DEFAULT_GROUP_SIZE,
     val cells: List<List<KenKenGridItem>> = emptyList(),
     val horizontalLines: List<KenKenGridLine> = emptyList(),
     val verticalLines: List<KenKenGridLine> = emptyList(),
@@ -16,7 +17,8 @@ data class KenKenGridState(
     val shapes: List<KenKenShape> = emptyList()
 ) {
     companion object {
-        val DEFAULT_GRID_SIZE = KenKenGridSize(6)
+        val DEFAULT_GRID_SIZE = KenKenGridSize(4)
+        val DEFAULT_GROUP_SIZE = KenKenGroupSize(4)
         val minGridSize = KenKenGridSize(4)
         val maxGridSize = KenKenGridSize(8)
     }
@@ -61,6 +63,9 @@ value class KenKenCellValue(val value: Int)
 
 @JvmInline
 value class KenKenGridSize(val value: Int)
+
+@JvmInline
+value class KenKenGroupSize(val value: Int)
 
 @JvmInline
 value class KenKenRowCell(val value: Int)
