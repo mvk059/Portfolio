@@ -19,7 +19,7 @@ class KenKenShapeUseCase {
         horizontalLines: List<KenKenGridLine>,
         shapes: List<KenKenShape>,
     ): List<KenKenShape> = buildList {
-        val gridSize = gridSize.value - 1
+        val gridSize = gridSize.value
         val visited = mutableSetOf<Pair<Int, Int>>()
 
         // Examine each cell as a potential starting point

@@ -45,8 +45,8 @@ fun KenKenGrid(
             .fillMaxSize()
 //            .aspectRatio(1f)
             .onSizeChanged {
-                val cellWidthSize = it.width / (gridSize - 1)
-                val cellHeightSize = it.height / (gridSize - 1)
+                val cellWidthSize = it.width / gridSize
+                val cellHeightSize = it.height / gridSize
                 onCellSizePixelsChange(KenKenGridIntent.UpdateCellSize(Offset(cellWidthSize.toFloat(), cellHeightSize.toFloat())))
             }
             .pointerInput(horizontalLines, verticalLines, shapes) {
