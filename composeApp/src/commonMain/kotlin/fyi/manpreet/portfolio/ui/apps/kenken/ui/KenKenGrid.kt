@@ -18,9 +18,9 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.sp
-import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenGridIntent
-import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenGridLine
-import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenShape
+import fyi.manpreet.portfolio.ui.apps.kenken.state.KenKenGridIntent
+import fyi.manpreet.portfolio.ui.apps.kenken.state.KenKenGridLine
+import fyi.manpreet.portfolio.ui.apps.kenken.state.KenKenShape
 import kotlin.math.abs
 
 @OptIn(ExperimentalMaterial3Api::class)

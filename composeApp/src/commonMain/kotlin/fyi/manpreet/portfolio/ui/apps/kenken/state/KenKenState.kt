@@ -1,7 +1,9 @@
-package fyi.manpreet.portfolio.ui.apps.kenken.model
+package fyi.manpreet.portfolio.ui.apps.kenken.state
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.geometry.Offset
+import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenGridLineType
+import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenOperation
 import kotlin.jvm.JvmInline
 
 @Immutable
@@ -30,7 +32,6 @@ data class KenKenGridItem(
     val id: String,
     val row: KenKenRowCell,
     val column: KenKenColCell,
-    val cellType: KenKenCellType,
     val isSelected: Boolean = false,
 )
 
@@ -39,7 +40,7 @@ data class KenKenGridLine(
     val id: String,
     val start: Offset = Offset.Unspecified,
     val end: Offset = Offset.Unspecified,
-    val gridLineType: GridLineType,
+    val gridLineType: KenKenGridLineType,
 )
 
 @Immutable

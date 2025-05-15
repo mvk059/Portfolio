@@ -1,6 +1,7 @@
-package fyi.manpreet.portfolio.ui.apps.kenken.model
+package fyi.manpreet.portfolio.ui.apps.kenken.state
 
 import androidx.compose.ui.geometry.Offset
+import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenOperation
 
 sealed interface KenKenGridIntent {
     data class ToggleLine(val selectedLine: KenKenGridLine) : KenKenGridIntent

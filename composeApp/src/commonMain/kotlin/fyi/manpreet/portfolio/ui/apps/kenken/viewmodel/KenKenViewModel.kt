@@ -3,15 +3,15 @@ package fyi.manpreet.portfolio.ui.apps.kenken.viewmodel
 import androidx.compose.ui.geometry.Offset
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import fyi.manpreet.portfolio.ui.apps.kenken.model.GridLineType
-import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenCellValue
-import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenGridIntent
-import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenGridLine
-import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenGridSize
-import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenGridState
-import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenGroupSize
+import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenGridLineType
+import fyi.manpreet.portfolio.ui.apps.kenken.state.KenKenCellValue
+import fyi.manpreet.portfolio.ui.apps.kenken.state.KenKenGridIntent
+import fyi.manpreet.portfolio.ui.apps.kenken.state.KenKenGridLine
+import fyi.manpreet.portfolio.ui.apps.kenken.state.KenKenGridSize
+import fyi.manpreet.portfolio.ui.apps.kenken.state.KenKenGridState
+import fyi.manpreet.portfolio.ui.apps.kenken.state.KenKenGroupSize
 import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenOperation
-import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenShape
+import fyi.manpreet.portfolio.ui.apps.kenken.state.KenKenShape
 import fyi.manpreet.portfolio.ui.apps.kenken.usecase.KenKenShapeUseCase
 import fyi.manpreet.portfolio.ui.apps.kenken.util.getHorizontalId
 import fyi.manpreet.portfolio.ui.apps.kenken.util.getStartAndEndCoordinatesFromId
@@ -93,7 +93,7 @@ class KenKenViewModel : ViewModel() {
                         id = id,
                         start = Offset(col * cellSize.x, row * cellSize.y),
                         end = Offset((col * cellSize.x) + cellSize.x, row * cellSize.y),
-                        gridLineType = GridLineType.HORIZONTAL,
+                        gridLineType = KenKenGridLineType.HORIZONTAL,
                     )
                 )
             }
@@ -108,7 +108,7 @@ class KenKenViewModel : ViewModel() {
                             id = id,
                             start = Offset(col * cellSize.x, row * cellSize.y),
                             end = Offset(col * cellSize.x, (row * cellSize.y) + cellSize.y),
-                            gridLineType = GridLineType.VERTICAL,
+                            gridLineType = KenKenGridLineType.VERTICAL,
                         )
                     )
                 }
@@ -122,7 +122,7 @@ class KenKenViewModel : ViewModel() {
         // Boundary line click
         if (clickedLine.id in _gridState.value.boundaryLineIds) return
 
-        val targetLines = if (clickedLine.gridLineType == GridLineType.VERTICAL) _gridState.value.verticalLines else _gridState.value.horizontalLines
+        val targetLines = if (clickedLine.gridLineType == KenKenGridLineType.VERTICAL) _gridState.value.verticalLines else _gridState.value.horizontalLines
         val targetLine = targetLines.find { it.id == clickedLine.id } ?: return
 
         // Add or remove the clicked line from the selected lines

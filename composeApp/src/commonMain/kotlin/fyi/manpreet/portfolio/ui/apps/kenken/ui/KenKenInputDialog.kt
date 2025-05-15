@@ -36,10 +36,10 @@ import com.composables.core.Dialog
 import com.composables.core.DialogPanel
 import com.composables.core.DialogProperties
 import com.composables.core.rememberDialogState
-import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenCellValue
-import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenGridIntent
+import fyi.manpreet.portfolio.ui.apps.kenken.state.KenKenCellValue
+import fyi.manpreet.portfolio.ui.apps.kenken.state.KenKenGridIntent
 import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenOperation
-import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenShape
+import fyi.manpreet.portfolio.ui.apps.kenken.state.KenKenShape
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

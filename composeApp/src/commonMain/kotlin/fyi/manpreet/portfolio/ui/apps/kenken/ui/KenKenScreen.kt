@@ -17,10 +17,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenGridIntent
-import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenGridSize
-import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenGridState
-import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenGroupSize
+import fyi.manpreet.portfolio.ui.apps.kenken.state.KenKenGridIntent
+import fyi.manpreet.portfolio.ui.apps.kenken.state.KenKenGridSize
+import fyi.manpreet.portfolio.ui.apps.kenken.state.KenKenGridState
+import fyi.manpreet.portfolio.ui.apps.kenken.state.KenKenGroupSize
 import fyi.manpreet.portfolio.ui.apps.kenken.viewmodel.KenKenViewModel
 import fyi.manpreet.portfolio.window.calculateWindowWidthSize
 

@@ -1,6 +1,6 @@
 package fyi.manpreet.portfolio.ui.apps.kenken.util
 
-import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenGridLine
+import fyi.manpreet.portfolio.ui.apps.kenken.state.KenKenGridLine
 import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenOperation
 
 fun Pair<Int, Int>.getHorizontalId(): String = buildString {

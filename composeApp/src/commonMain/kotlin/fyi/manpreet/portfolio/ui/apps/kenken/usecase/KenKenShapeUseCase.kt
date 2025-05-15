@@ -1,9 +1,9 @@
 package fyi.manpreet.portfolio.ui.apps.kenken.usecase
 
 import androidx.compose.ui.geometry.Offset
-import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenGridLine
-import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenGridSize
-import fyi.manpreet.portfolio.ui.apps.kenken.model.KenKenShape
+import fyi.manpreet.portfolio.ui.apps.kenken.state.KenKenGridLine
+import fyi.manpreet.portfolio.ui.apps.kenken.state.KenKenGridSize
+import fyi.manpreet.portfolio.ui.apps.kenken.state.KenKenShape
 import fyi.manpreet.portfolio.ui.apps.kenken.util.getBottomID
 import fyi.manpreet.portfolio.ui.apps.kenken.util.getLeftID
 import fyi.manpreet.portfolio.ui.apps.kenken.util.getRightID
