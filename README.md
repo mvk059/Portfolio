@@ -1,1 +1,1 @@
-Compose Multiplatform apps built by me. Deployed [here](manpreet.fyi/portfolio)
+Compose Multiplatform apps built by me. Deployed [here](https://manpreet.fyi/portfolio/)
