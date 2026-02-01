@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
@@ -25,7 +26,6 @@ import fyi.manpreet.portfolio.ui.apps.expandable_text.ExpandableText
 import fyi.manpreet.portfolio.ui.apps.filterchip_dropdown.FilterChipDropdown
 import fyi.manpreet.portfolio.ui.apps.starfield.StarField
 import fyi.manpreet.portfolio.ui.apps.transcibe_audio.TranscribeAudio
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 @Preview

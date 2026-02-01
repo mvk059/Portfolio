@@ -18,7 +18,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.CanvasBasedWindow
+import androidx.compose.ui.window.ComposeViewport
 import fyi.manpreet.portfolio.ui.apps.capturecomposable.CaptureComposable
 import fyi.manpreet.portfolio.ui.apps.expandable_text.ExpandableText
 import fyi.manpreet.portfolio.ui.apps.filterchip_dropdown.FilterChipDropdown
@@ -30,8 +30,10 @@ import org.w3c.dom.events.Event
 
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {
-    CanvasBasedWindow(canvasElementId = "ComposeTarget") {
 
+    ComposeViewport(
+        viewportContainerId = "ComposeTarget",
+    ) {
         // Observe window size changes
         val windowSize = remember { mutableStateOf(getWindowSize()) }
         val canvasSize = remember { mutableStateOf(getCanvasSize()) }
