@@ -68,6 +68,10 @@ kotlin {
             implementation(libs.compose.navigation)
             implementation(libs.compose.material.icons)
 
+            implementation(libs.compose.navigation3.ui)
+            implementation(libs.compose.lifecycle.viewmodel.nav3)
+            implementation(libs.compose.lifecycle.viewmodel)
+
             implementation(libs.kotlinx.coroutines.core)
             implementation(libs.kotlinx.serialization)
 
